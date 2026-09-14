@@ -52,7 +52,6 @@ class DataForm:
         self.Vehicle_Age_lt_1_Year: Optional[int] = None
         self.Vehicle_Age_gt_2_Years: Optional[int] = None
         self.Vehicle_Damage_Yes: Optional[int] = None
-                
 
     async def get_vehicle_data(self):
         """
@@ -79,7 +78,10 @@ async def index(request: Request):
     Renders the main HTML form page for vehicle data input.
     """
     return templates.TemplateResponse(
-            "vehicledata.html",{"request": request, "context": "Rendering"})
+        request=request,
+        name="vehicledata.html",
+        context={"context": "Rendering"}
+    )
 
 # Route to trigger the model training process
 @app.get("/train")
@@ -106,18 +108,18 @@ async def predictRouteClient(request: Request):
         await form.get_vehicle_data()
         
         vehicle_data = VehicleData(
-                                Gender= form.Gender,
-                                Age = form.Age,
-                                Driving_License = form.Driving_License,
-                                Region_Code = form.Region_Code,
-                                Previously_Insured = form.Previously_Insured,
-                                Annual_Premium = form.Annual_Premium,
-                                Policy_Sales_Channel = form.Policy_Sales_Channel,
-                                Vintage = form.Vintage,
-                                Vehicle_Age_lt_1_Year = form.Vehicle_Age_lt_1_Year,
-                                Vehicle_Age_gt_2_Years = form.Vehicle_Age_gt_2_Years,
-                                Vehicle_Damage_Yes = form.Vehicle_Damage_Yes
-                                )
+            Gender=form.Gender,
+            Age=form.Age,
+            Driving_License=form.Driving_License,
+            Region_Code=form.Region_Code,
+            Previously_Insured=form.Previously_Insured,
+            Annual_Premium=form.Annual_Premium,
+            Policy_Sales_Channel=form.Policy_Sales_Channel,
+            Vintage=form.Vintage,
+            Vehicle_Age_lt_1_Year=form.Vehicle_Age_lt_1_Year,
+            Vehicle_Age_gt_2_Years=form.Vehicle_Age_gt_2_Years,
+            Vehicle_Damage_Yes=form.Vehicle_Damage_Yes
+        )
 
         # Convert form data into a DataFrame for the model
         vehicle_df = vehicle_data.get_vehicle_input_data_frame()
@@ -133,8 +135,9 @@ async def predictRouteClient(request: Request):
 
         # Render the same HTML page with the prediction result
         return templates.TemplateResponse(
-            "vehicledata.html",
-            {"request": request, "context": status},
+            request=request,
+            name="vehicledata.html",
+            context={"context": status}
         )
         
     except Exception as e:
@@ -143,5 +146,3 @@ async def predictRouteClient(request: Request):
 # Main entry point to start the FastAPI server
 if __name__ == "__main__":
     app_run(app, host=APP_HOST, port=APP_PORT)
-
-#test- 14
