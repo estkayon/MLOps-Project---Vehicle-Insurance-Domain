@@ -6,6 +6,7 @@ __pycache__/
 projectflow.txt
 mongoDB_demo.ipynb
 artifact
+crash.txt
 
 # C extensions
 *.so
