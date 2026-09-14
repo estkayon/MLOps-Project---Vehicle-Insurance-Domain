@@ -78,8 +78,8 @@ async def index(request: Request):
     Renders the main HTML form page for vehicle data input.
     """
     return templates.TemplateResponse(
-        request=request,
-        name="vehicledata.html",
+        request=request, 
+        name="vehicledata.html", 
         context={"context": "Rendering"}
     )
 
